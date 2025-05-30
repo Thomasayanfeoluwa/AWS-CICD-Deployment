@@ -43,12 +43,12 @@ jobs:
         if command -v aws >/dev/null 2>&1; then
           echo "AWS CLI is already installed. Updating..."
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip -q awscliv2.zip
+          unzip awscliv2.zip
           sudo ./aws/install --update
         else
           echo "AWS CLI not found. Installing..."
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip -q awscliv2.zip
+          unzip awscliv2.zip
           sudo ./aws/install
         fi
         aws --version
@@ -87,9 +87,3 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
-
-    - name: Clean up workspace
-      if: always()
-      run: |
-        echo "Cleaning up runner workspace to free disk space..."
-        rm -rf ${{ github.workspace }}/*
